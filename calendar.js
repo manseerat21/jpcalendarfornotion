@@ -1,10 +1,11 @@
 const daysElement = document.getElementById("calendarDays");
 const fullDateElement = document.getElementById("fullDate");
-const clockElement = document.getElementById("clock");
-const japaneseTimeElement = document.getElementById("japaneseTime");
 
 const japaneseMonths = ["睦月", "如月", "弥生", "卯月", "皐月", "水無月", "文月", "葉月", "長月", "神無月", "霜月", "師走"];
 const japaneseDays = ["日", "月", "火", "水", "木", "金", "土"];
+
+const clockElementLeft = document.getElementById("clock-left");
+const clockElementRight = document.getElementById("clock-right");
 
 function generateCalendar(year, month, day) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -27,38 +28,31 @@ function generateCalendar(year, month, day) {
     const dayElement = document.createElement("div");
     dayElement.textContent = d;
     dayElement.classList.add("day");
-    
+
     if (d === today) {
       dayElement.classList.add("highlight");
     }
 
     daysElement.appendChild(dayElement);
   }
-
-  const now = new Date();
-  const hours = String(now.getHours()).padStart(2, "0");
-  const minutes = String(now.getMinutes()).padStart(2, "0");
-  const seconds = String(now.getSeconds()).padStart(2, "0");
-  const localTime = `${hours}:${minutes}:${seconds}`;
-  
-  const japaneseTime = new Date().toLocaleTimeString("ja-JP", { timeZone: "Asia/Tokyo" });
-  
-  clockElement.textContent = localTime;
-  japaneseTimeElement.textContent = japaneseTime;
 }
 
 const currentDate = new Date();
 generateCalendar(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
 
-setInterval(() => {
+function updateClocks() {
   const now = new Date();
-  const hours = String(now.getHours()).padStart(2, "0");
-  const minutes = String(now.getMinutes()).padStart(2, "0");
-  const seconds = String(now.getSeconds()).padStart(2, "0");
-  const localTime = `${hours}:${minutes}:${seconds}`;
-  
-  const japaneseTime = new Date().toLocaleTimeString("ja-JP", { timeZone: "Asia/Tokyo" });
-  
-  clockElement.textContent = localTime;
-  japaneseTimeElement.textContent = japaneseTime;
-}, 1000);
+
+  // Update local time clock (clock-left)
+  const localTimeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+  const localTime = now.toLocaleTimeString(undefined, localTimeOptions);
+  clockElementLeft.textContent = `now:${localTime}`;
+
+  // Update JST time clock (clock-right)
+  const jstTimeOptions = { timeZone: 'Asia/Tokyo', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+  const jstTime = now.toLocaleTimeString(undefined, jstTimeOptions);
+  clockElementRight.textContent = `jst: ${jstTime}`;
+}
+
+updateClocks();
+setInterval(updateClocks, 1000);
