@@ -1,12 +1,19 @@
 const daysElement = document.getElementById("calendarDays");
-const monthYearElement = document.getElementById("monthYear");
+const fullDateElement = document.getElementById("fullDate");
+const clockElement = document.getElementById("clock");
 
-function generateCalendar(year, month) {
+const japaneseMonths = ["睦月", "如月", "弥生", "卯月", "皐月", "水無月", "文月", "葉月", "長月", "神無月", "霜月", "師走"];
+const japaneseDays = ["日", "月", "火", "水", "木", "金", "土"];
+
+function generateCalendar(year, month, day) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDay = new Date(year, month, 1).getDay();
+  const today = new Date().getDate();
 
-  monthYearElement.textContent = new Date(year, month).toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  const japaneseMonthName = japaneseMonths[month];
+  const japaneseDay = japaneseDays[new Date(year, month, day).getDay()];
 
+  fullDateElement.textContent = `${year}年${month + 1}月${day}日 (${japaneseDay})`;
   daysElement.innerHTML = "";
 
   for (let i = 0; i < firstDay; i++) {
@@ -15,13 +22,32 @@ function generateCalendar(year, month) {
     daysElement.appendChild(emptyDay);
   }
 
-  for (let day = 1; day <= daysInMonth; day++) {
+  for (let d = 1; d <= daysInMonth; d++) {
     const dayElement = document.createElement("div");
-    dayElement.textContent = day;
+    dayElement.textContent = d;
     dayElement.classList.add("day");
+    
+    if (d === today) {
+      dayElement.classList.add("highlight");
+    }
+
     daysElement.appendChild(dayElement);
   }
+
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  const seconds = String(now.getSeconds()).padStart(2, "0");
+  clockElement.textContent = `${hours}:${minutes}:${seconds}`;
 }
 
 const currentDate = new Date();
-generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+generateCalendar(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+
+setInterval(() => {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  const seconds = String(now.getSeconds()).padStart(2, "0");
+  clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+}, 1000);
