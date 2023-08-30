@@ -14,14 +14,14 @@
   font-weight: bold;
   text-align: center;
   margin-bottom: 10px;
-  color: #9c4543; /* Pale brown */
+  color: #333; /* Dark grey */
 }
 
 .date {
   font-size: 14px;
   font-style: italic;
   text-align: center;
-  color: #7a7a7a; /* Grey */
+  color: #354c52;
 }
 
 .space {
@@ -43,13 +43,23 @@
 }
 
 .highlight {
-  background-color: #9c4543; /* Pale brown */
+  background-color: #354c52;
+  border: 1px solid #354c49;
   color: white; /* White text for contrast */
 }
 
 .clock {
-  text-align: right;
+  display: inline-block;
+  padding: 2%;
   font-size: 12px;
-  margin-top: 10px;
-  color: #7a7a7a; /* Grey */
+  margin-top: 5px;
+  margin-bottom: -3px;
+  color: #777; /* Light grey */
+}
+#clock-left {
+  width:70%;
+  text-align: left;
+}
+#clock-right {
+  text-align: right;
 }
