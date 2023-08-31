@@ -1,11 +1,29 @@
 const daysElement = document.getElementById("calendarDays");
-const fullDateElement = document.getElementById("fullDate");
+const fullDate1Element = document.getElementById("fullDate1");
+const fullDate2Element = document.getElementById("fullDate2");
 
-const japaneseMonths = ["睦月", "如月", "弥生", "卯月", "皐月", "水無月", "文月", "葉月", "長月", "神無月", "霜月", "師走"];
-const japaneseDays = ["日", "月", "火", "水", "木", "金", "土"];
+const japaneseMonths = ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"];
+const japaneseDays = ["月", "火", "水", "木", "金", "土", "日"];
+
+const previousMonthButton = document.getElementById("prev-month");
+const nextMonthButton = document.getElementById("next-month");
+let currentDate1 = new Date();
 
 const clockElementLeft = document.getElementById("clock-left");
 const clockElementRight = document.getElementById("clock-right");
+
+// Set the fixed fullDate2 value
+const fixedFullDateYear = currentDate1.getFullYear();
+const fixedFullDateMonth = currentDate1.getMonth() + 1;
+const fixedFullDateDay = currentDate1.getDate();
+const fixedJapaneseDay = japaneseDays[currentDate1.getDay()-1];
+
+fullDate2Element.textContent = `日付: ${fixedFullDateYear}年${fixedFullDateMonth}月${fixedFullDateDay}日 (${fixedJapaneseDay})`;
+
+// Highlight the day of the week for the first day of the month
+const currentDayOfWeek = new Date(currentDate1.getFullYear(), currentDate1.getMonth(), 1).getDay() + 1;
+const dayOfWeekElements = document.querySelectorAll(".day-of-week");
+dayOfWeekElements[currentDayOfWeek].classList.add("highlight2");
 
 function generateCalendar(year, month, day) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -15,10 +33,14 @@ function generateCalendar(year, month, day) {
   const japaneseMonthName = japaneseMonths[month];
   const japaneseDay = japaneseDays[new Date(year, month, day).getDay()];
 
-  fullDateElement.textContent = `${year}年${month + 1}月${day}日 (${japaneseDay})`;
+  fullDate1Element.textContent = `${year}年${month + 1}月`;
+  document.getElementById("japanese-month").textContent = japaneseMonthName;
+
   daysElement.innerHTML = "";
 
-  for (let i = 0; i < firstDay; i++) {
+  const firstDayOfWeek = (firstDay + 6) % 7;
+
+  for (let i = 0; i < firstDayOfWeek; i++) {
     const emptyDay = document.createElement("div");
     emptyDay.classList.add("day");
     daysElement.appendChild(emptyDay);
@@ -29,26 +51,37 @@ function generateCalendar(year, month, day) {
     dayElement.textContent = d;
     dayElement.classList.add("day");
 
-    if (d === today) {
+    if (d === today && month === fixedFullDateMonth-1) {
       dayElement.classList.add("highlight");
     }
 
     daysElement.appendChild(dayElement);
   }
+
 }
 
-const currentDate = new Date();
-generateCalendar(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+function navigatePreviousMonth() {
+  currentDate1 = new Date(currentDate1.getFullYear(), currentDate1.getMonth() - 1, 1);
+  generateCalendar(currentDate1.getFullYear(), currentDate1.getMonth(), currentDate1.getDate());
+}
+
+function navigateNextMonth() {
+  currentDate1 = new Date(currentDate1.getFullYear(), currentDate1.getMonth() + 1, 1);
+  generateCalendar(currentDate1.getFullYear(), currentDate1.getMonth(), currentDate1.getDate());
+}
+
+previousMonthButton.addEventListener("click", navigatePreviousMonth);
+nextMonthButton.addEventListener("click", navigateNextMonth);
+
+generateCalendar(currentDate1.getFullYear(), currentDate1.getMonth(), currentDate1.getDate());
 
 function updateClocks() {
   const now = new Date();
 
-  // Update local time clock (clock-left)
   const localTimeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
   const localTime = now.toLocaleTimeString(undefined, localTimeOptions);
   clockElementLeft.textContent = `now: ${localTime}`;
 
-  // Update JST time clock (clock-right)
   const jstTimeOptions = { timeZone: 'Asia/Tokyo', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
   const jstTime = now.toLocaleTimeString(undefined, jstTimeOptions);
   clockElementRight.textContent = `jst: ${jstTime}`;
