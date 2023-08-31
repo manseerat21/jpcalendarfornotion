@@ -84,7 +84,7 @@ function updateClocks() {
 
   const localTimeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
   const localTime = now.toLocaleTimeString(undefined, localTimeOptions);
-  clockElementLeft.textContent = `now: ${localTime}`;
+  clockElementLeft.textContent = `here: ${localTime}`;
 
   const jstTimeOptions = { timeZone: 'Asia/Tokyo', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
   const jstTime = now.toLocaleTimeString(undefined, jstTimeOptions);
