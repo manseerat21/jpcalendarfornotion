@@ -12,18 +12,12 @@ let currentDate1 = new Date();
 const clockElementLeft = document.getElementById("clock-left");
 const clockElementRight = document.getElementById("clock-right");
 
-// Set the fixed fullDate2 value
 const fixedFullDateYear = currentDate1.getFullYear();
 const fixedFullDateMonth = currentDate1.getMonth() + 1;
 const fixedFullDateDay = currentDate1.getDate();
 const fixedJapaneseDay = japaneseDays[currentDate1.getDay()-1];
 
 fullDate2Element.textContent = `日付: ${fixedFullDateYear}年${fixedFullDateMonth}月${fixedFullDateDay}日 (${fixedJapaneseDay})`;
-
-// Highlight the day of the week for the first day of the month
-const currentDayOfWeek = new Date(currentDate1.getFullYear(), currentDate1.getMonth(), 1).getDay() + 1;
-const dayOfWeekElements = document.querySelectorAll(".day-of-week");
-dayOfWeekElements[currentDayOfWeek].classList.add("highlight2");
 
 function generateCalendar(year, month, day) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -50,14 +44,24 @@ function generateCalendar(year, month, day) {
     const dayElement = document.createElement("div");
     dayElement.textContent = d;
     dayElement.classList.add("day");
-
-    if (d === today && month === fixedFullDateMonth-1) {
+  
+    if (d === today && month === fixedFullDateMonth - 1) {
       dayElement.classList.add("highlight");
     }
-
+  
     daysElement.appendChild(dayElement);
   }
 
+  if (month === fixedFullDateMonth - 1) {
+    const firstDayOfWeek = new Date(year, month, 1).getDay();
+    const dayOfWeekElements = document.querySelectorAll(".day-of-week");
+    dayOfWeekElements[firstDayOfWeek+1].classList.add("highlight2");
+  } else {
+    const dayOfWeekElements = document.querySelectorAll(".day-of-week");
+    dayOfWeekElements.forEach(element => {
+      element.classList.remove("highlight2");
+    });
+  }
 }
 
 function navigatePreviousMonth() {
