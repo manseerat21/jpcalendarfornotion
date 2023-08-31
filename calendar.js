@@ -53,9 +53,9 @@ function generateCalendar(year, month, day) {
   }
 
   if (month === fixedFullDateMonth - 1) {
-    const firstDayOfWeek = new Date(year, month, 1).getDay();
+    const firstDayOfWeek = new Date(year, month, day).getDay();
     const dayOfWeekElements = document.querySelectorAll(".day-of-week");
-    dayOfWeekElements[firstDayOfWeek+1].classList.add("highlight2");
+    dayOfWeekElements[firstDayOfWeek-1].classList.add("highlight2");
   } else {
     const dayOfWeekElements = document.querySelectorAll(".day-of-week");
     dayOfWeekElements.forEach(element => {
