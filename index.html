@@ -5,13 +5,34 @@
   </head>
   <body>
     <div class="calendar">
-      <div class="header">
-        カレンダー
+      <div class="container">
+        <div class="caltitle">
+          カレンダー
+        </div>
+        <div class="container">
+          <div class="inblock">
+            <p id="fullDate1"></p>
+          </div>
+          <div class="calbar">
+            <button id="prev-month">&lt;</button>
+              <span id="japanese-month"></span>
+            <button id="next-month">&gt;</button>
+          </div>
+        </div>
       </div>
       <div class="date">
-        <span id="fullDate"></span>
+        <span id="fullDate2"></span>
       </div>
       <div class="space"></div>
+      <div class="days-of-week">
+        <div class="day-of-week">月</div>
+        <div class="day-of-week">火</div>
+        <div class="day-of-week">水</div>
+        <div class="day-of-week">木</div>
+        <div class="day-of-week">金</div>
+        <div class="day-of-week">土</div>
+        <div class="day-of-week">日</div>
+      </div>
       <div class="days" id="calendarDays"></div>
       <div class="clock" id="clock-left"></div>
       <div class="clock" id="clock-right"></div>
