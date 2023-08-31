@@ -1,6 +1,6 @@
 /* Calendar Styles */
 .calendar {
-  width: 320px;
+  width: 310px;
   padding: 10px;
   font-family: "Noto Serif JP", serif;
   background-color: #b0d4e3; /* Cool blue */
@@ -107,11 +107,16 @@
 }
 
 #clock-left {
-  width:70.55%;
+  padding-left: 10px;
+  font-weight: bold;
+  display: inline-block;
   text-align: left;
 }
 
 #clock-right {
+  padding-right: 10px;
+  font-weight: bold;
+  display: inline-block;
   text-align: right;
 }
 
