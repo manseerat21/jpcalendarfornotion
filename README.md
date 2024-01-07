@@ -1,8 +1,8 @@
-# Kite - Personal Calendar Widget 🗓️
+# JapaneseCalendar - Personal Calendar Widget 🗓️
 
 ## Overview
 
-Kite's Calendar Widget is a minimalist Japanese-inspired web component, designed to be used as a personal diary or gallery. Crafted with HTML, CSS, and JavaScript, it provides a clean and functional calendar experience. The widget can be easily integrated into platforms like Notion, offering a unique way to document and share your journey.
+Japanese Calendar Widget is a minimalist Japanese-inspired web component, designed to be used as a personal diary or gallery. Crafted with HTML, CSS, and JavaScript, it provides a clean and functional calendar experience. The widget can be easily integrated into platforms like Notion, offering a unique way to document and share your journey.
 
 ## Features
 
